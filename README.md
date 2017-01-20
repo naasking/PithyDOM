@@ -64,9 +64,9 @@ parameters that initMouseEvent expects or you will get a runtime error.
 Exposes convenient methods for adding and removing classes, and provides
 implementations for versions of IE that don't support classList.
 
-   $.addClass       // add a single CSS class to an Element
-   $.removeClass    // remove a single CSS class
-   $.hasClass       // check whether
+    $.addClass       // add a single CSS class to an Element
+    $.removeClass    // remove a single CSS class
+    $.hasClass       // check whether
 
 add/remove support chaining, in that they return the element for further
 operations. Since add/remove only operate on a single class at a time,

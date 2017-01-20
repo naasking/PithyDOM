@@ -87,6 +87,16 @@ function $insertAfter(){
     x.parentNode.insertAfter(p, x);
     return $.first('#texty ~ p').innerText.trim() === 'Paragraph';
 }
+function $mapQuery(){
+    var y = $.any('body>*').map(function(x){ return x.innerText;});
+    return y.length === 4
+        && y[0].trim() === 'Some text.';
+}
+function $mapChildren(){
+    var y = document.body.children.map(function(x){ return x.innerText;});
+    return y.length === 4
+        && y[0].trim() === 'Some text.';
+}
 test($members);
 test($elementMembers);
 test($collectionMembers, HTMLCollection.prototype);
@@ -101,6 +111,8 @@ test($byClass);
 test($byName);
 test($byTag);
 test($insertAfter);
+test($mapQuery);
+test($mapChildren);
 </script>
     </body>
 </html>
