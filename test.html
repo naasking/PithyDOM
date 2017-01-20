@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title></title>
+        <script type="text/javascript" src="./pithy.js"></script>
+    </head>
+    <body>
+        <a class="foo" name="somename">
+        Some text.
+        </a>
+        <div id="texty">
+        Some other <a>text</a>.
+        </div>
+<script type="text/javascript">
+//=== TESTING FRAMEWORK ===
+function assert(label, cond) {
+    console.log((cond ? "OK::" : "ERROR::") + (label || arguments.callee.name));
+    return cond;
+}
+function test(f) {
+    var df = f.toString();
+    var name = df.substr(9, df.indexOf('(')-9);
+    return assert(name, f.apply(this, [].slice.call(arguments, 1)));
+}
+function has(obj, mems) {
+    return mems.every(function(x) { return obj[x]; });
+}
+
+//=== TESTS ===
+function $members() {
+    return has($, ['first','any','byTag','byClass','byName', 'byId', 'on', 'off', 'raise', 'new', 'insertAfter', 'addClass', 'removeClass', 'hasClass', 'defer', 'periodic', 'cancel']);
+}
+function $elementMembers() {
+    return has(Element.prototype, ['first','any','byTag','byClass', 'byId', 'byName', 'on', 'off', 'raise', 'insertAfter', 'addClass', 'removeClass', 'hasClass']);
+}
+function $collectionMembers(x){
+    if (!x) throw new Error(this.name + ": invalid number of arguments");
+    //IE doesn't support find
+    return has(x, ['forEach','map','reduce','filter','reduceRight','every','slice','some','on','off','raise']);
+    //return has(x, ['forEach','map','reduce','filter','reduceRight','every','slice','some','find','on','off','raise']);
+}
+function $hasClass(cl){
+    return $.first('.' + cl).hasClass(cl);
+}
+function $addClass(cur, cl) {
+    var x = $.first('.' + cur);
+    x.addClass(cl);
+    return 0 <= x.className.indexOf(cl)
+        && test($hasClass, cl)
+        && $.first('.' + cl) === x;
+}
+function $removeClass(cl) {
+    var x = $.first('.' + cl);
+    x.removeClass(cl);
+    return 0 > x.className.indexOf(cl)
+        && !$.first('.' + cl);
+}
+function $collectionRaise(){
+    var raised = 0;
+    $.any('body>*:not(script)')
+     .on('click', function(){
+        ++raised;
+    })
+     .raise($.event('Event', 'click', true, true));
+    return raised == 2;
+}
+function $first(){
+    return $.first('.foo').innerText.trim() == 'Some text.';
+}
+function $byId(){
+    return $.byId('texty') != null;
+}
+function $byClass(){
+    return $.byClass('foo').length === 1;
+}
+function $byName(){
+    return $.byName('somename').length === 1;
+}
+function $byTag(){
+    return $.byTag('a').length === 2;
+}
+function $insertAfter(){
+    var x = $.byId('texty');
+    var p = $.new('p');
+    p.innerText = 'Paragraph';
+    x.parentNode.insertAfter(p, x);
+    return $.first('#texty ~ p').innerText.trim() === 'Paragraph';
+}
+test($members);
+test($elementMembers);
+test($collectionMembers, HTMLCollection.prototype);
+test($collectionMembers, NodeList.prototype);
+test($hasClass, 'foo');
+test($addClass, 'foo', 'bar');
+test($removeClass, 'bar');
+test($collectionRaise);
+test($first);
+test($byId);
+test($byClass);
+test($byName);
+test($byTag);
+test($insertAfter);
+</script>
+    </body>
+</html>
