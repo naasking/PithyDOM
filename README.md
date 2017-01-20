@@ -41,9 +41,9 @@ Pithy exposes more concise names for the standard event facilities. These
 methods extend Element.prototype, HTMLCollection.prototype and
 NodeList.prototype, so they are available everywhere.
 
-   $.on         // alias for addEventListener
-   $.off        // alias for removeEventListener
-   $.raise      // alias for dispatchEvent
+    $.on         // alias for addEventListener
+    $.off        // alias for removeEventListener
+    $.raise      // alias for dispatchEvent
 
 You can use the new event APIs that support event constructors:
 
@@ -52,7 +52,7 @@ You can use the new event APIs that support event constructors:
 Or to support IE9, use the DOM level 3 API with this convenience
 function:
 
-   element.raise($.event('Event', 'click', true, true));
+    element.raise($.event('Event', 'click', true, true));
 
 The first argument is the kind of event, and defines which event init
 method is called, ie. 'MouseEvent' will call initMouseEvent, 'UIEvent'
@@ -87,7 +87,17 @@ Methods to manipulate the DOM:
 ## Browser Support
 
 Works in IE9+ and other standard browsers. I don't have access to some
-mobile browsers, but this library doesn't do anything complex.
+mobile browsers, but this library doesn't do anything overly complex,
+so they should be fine.
+
+## Status
+
+Let's say alpha quality for now, although the tests are pretty
+comprehensive given how simple Pithy is.
+
+Not sure if extending prototypes is the best approach, but it's certainly
+concise and usable. May switch to Object.defineProperty to make the
+properties immutable.
 
 ## License
 
