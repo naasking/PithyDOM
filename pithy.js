@@ -16,11 +16,6 @@
     var e = Element.prototype;
     var a = Array.prototype;
 
-    // timers
-    $.defer = setTimeout;
-    $.periodic = setInterval;
-    $.cancel = clearTimeout;
-
     // NodeList processing
     function r(n){
         //var m=['forEach','map','reduce','filter','reduceRight','every','slice','some','find','findIndex'];
