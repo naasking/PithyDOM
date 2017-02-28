@@ -99,4 +99,7 @@
             return 0<=this.className.split(' ').indexOf(c);
         };
     }
+    e.toggleClass = function(c) {
+        return this.hasClass(c) ? this.removeClass(c) : this.addClass(c);
+    };
 })(typeof exports === 'undefined' ? '$' : exports);
