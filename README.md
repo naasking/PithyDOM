@@ -1,7 +1,7 @@
 # PithyJS
 
 A small, concise DOM library for modern browsers and IE9+ that currently
-stands at 713 bytes minified+gzipped.
+stands at 693 bytes minified+gzipped.
 
 ## DOM Querying
 
@@ -16,15 +16,15 @@ are available everywhere.
     $.byName    // alias for getElementsByName
     $.byId      // alias for getElementsById
 
-Caveats: the semantics are sometimes not consistent across browsers.
-For instance, getElementsByName works applies to all elements in most
+Caveats: the semantics are sometimes inconsistent across browsers.
+For instance, getElementsByName applies to all elements in most
 browsers, but in IE9 it will only return those elements that typically
 have name attributes, like 'a' and 'input' elements.
 
 ## Collection Extensions
 
-The standard suite of purely functional array-processing functions are
-added to HTMLCollection.prototype and NodeList.prototype.
+The standard suite of pure array-processing functions are added
+to HTMLCollection.prototype and NodeList.prototype.
 
     list.forEach     // alias for Array.prototype.forEach
     list.map         // alias for Array.prototype.map
@@ -34,6 +34,10 @@ added to HTMLCollection.prototype and NodeList.prototype.
     list.every       // alias for Array.prototype.every
     list.some        // alias for Array.prototype.some
     list.slice       // alias for Array.prototype.slice
+
+So you can easily query and apply a function to a set of results:
+
+    $.byTag('a').forEach(function(x) { x.innerText = 'Hello!'; });
 
 ## Event Handling
 
@@ -66,13 +70,14 @@ implementations for versions of IE that don't support classList.
 
     $.addClass       // add a single CSS class to an Element
     $.removeClass    // remove a single CSS class
-    $.hasClass       // check whether
+    $.hasClass       // check whether an element has a class
+    $.toggleClass    // removes class if present, else adds the class
 
-add/remove support chaining, in that they return the element for further
-operations. Since add/remove only operate on a single class at a time,
-you can add multiple classes as:
+add/remove/toggle support chaining, in that they return the element for
+further operations. Since add/remove only operate on a single class at a
+time, you can add multiple classes as:
 
-    element.addClass('foo').addClass('bar');
+    element.addClass('foo').addClass('bar').toggleClass('active');
 
 This was for conciseness and simplicity of implementation, since adding
 multiple classes isn't necessarily supported even by browsers that
