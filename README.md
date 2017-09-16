@@ -90,6 +90,7 @@ support classList.
 Methods to manipulate the DOM:
 
     element.insertAfter     // complement to standard element.insertBefore
+    $.new                   // alias for document.createElement
 
 ## Browser Support
 
