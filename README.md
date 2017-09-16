@@ -1,7 +1,7 @@
 # PithyJS
 
 A small, concise DOM library for modern browsers and IE9+ that currently
-stands at 693 bytes minified+gzipped.
+stands at 706 bytes minified+gzipped.
 
 ## DOM Querying
 
@@ -24,7 +24,8 @@ have name attributes, like 'a' and 'input' elements.
 ## Collection Extensions
 
 The standard suite of pure array-processing functions are added
-to HTMLCollection.prototype and NodeList.prototype.
+to HTMLCollection.prototype, NodeList.prototype and
+NamedNodeMap.prototype.
 
     list.forEach     // alias for Array.prototype.forEach
     list.map         // alias for Array.prototype.map
@@ -42,8 +43,9 @@ So you can easily query and apply a function to a set of results:
 ## Event Handling
 
 Pithy exposes more concise names for the standard event facilities. These
-methods extend Element.prototype, HTMLCollection.prototype and
-NodeList.prototype, so they are available everywhere.
+methods extend Element.prototype, HTMLCollection.prototype,
+NodeList.prototype and NamedNodeMap.prototype, so they are available
+everywhere.
 
     $.on         // alias for addEventListener
     $.off        // alias for removeEventListener
@@ -65,8 +67,8 @@ parameters that initMouseEvent expects or you will get a runtime error.
 
 ## CSS Class Manipulation
 
-Exposes convenient methods for adding and removing classes, and provides
-implementations for versions of IE that don't support classList.
+These methods expose convenient methods for adding and removing classes,
+and provides implementations for versions of IE that don't support classList.
 
     $.addClass       // add a single CSS class to an Element
     $.removeClass    // remove a single CSS class
@@ -101,8 +103,7 @@ Let's say alpha quality for now, although the tests are pretty
 comprehensive given how simple Pithy is.
 
 Not sure if extending prototypes is the best approach, but it's certainly
-concise and usable. May switch to Object.defineProperty to make the
-properties immutable.
+concise and usable.
 
 ## License
 
