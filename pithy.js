@@ -41,7 +41,8 @@
     }
     r(HTMLCollection.prototype);
     r(NodeList.prototype);
-
+    r(NamedNodeMap.prototype);
+    
     // event registration
     $.event=function(k,t){
         var v=d.createEvent(k);
