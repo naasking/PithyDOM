@@ -9,66 +9,81 @@
  * See also: https://github.com/dciccale/ki.js
  * */
 (function(_){
-    var w = window;
-    if (w[_]) throw new Error(_ + ' is already defined.');
-    var d = document
-    var $ = w[_] = d.documentElement;
+    if (window[_]) throw new Error(_ + ' is already defined.');
     var e = Element.prototype;
-    var a = Array.prototype;
-
-    // NodeList processing
-    function r(n){
-        //var m=['forEach','map','reduce','filter','reduceRight','every','slice','some','find','findIndex'];
-        var m=['forEach','map','reduce','filter','reduceRight','every','slice','some'];
-        for (var i=0;i<m.length;++i)
-            n[m[i]]=n[m[i]]||a[m[i]];
-        // event registration
-        n.on = function(e,f,c){
-            for (var i=0;i<this.length;++i)
-                this[i].on(e,f,c);
-            return this;
-        };
-        n.off = function(e,f,c){
-            for (var i=0;i<this.length;++i)
-                this[i].off(e,f,c);
-            return this;
-        };
-        n.raise = function(e){
-            for (var i=0;i<this.length;++i)
-                this[i].raise(e);
-            return this;
-        };
-    }
-    r(HTMLCollection.prototype);
-    r(NodeList.prototype);
-    r(NamedNodeMap.prototype);
+    var $ = window[_] = document;
     
-    // event registration
+    // standard collection operations
+    var m=['forEach','map','reduce','filter','reduceRight','every','slice','some'];
+    
+    // add event listener to collection
+    function x(e,f,c){
+        for (var i=0;i<this.length;++i)
+            this[i].on(e,f,c);
+        return this;
+    }
+    // remove event listener from collection
+    function y(e,f,c){
+        for (var i=0;i<this.length;++i)
+            this[i].off(e,f,c);
+        return this;
+    }
+    // dispatch the event e to every element of the collection
+    function z(e){
+        for (var i=0;i<this.length;++i)
+            this[i].raise(e);
+        return this;
+    }
+    // load the standard operations into the given collection prototype
+    function c(n){
+        for (var i=0;i<m.length;++i)
+            n[m[i]]=n[m[i]]||Array.prototype[m[i]];
+        // event registration shorthands
+        n.on = x;
+        n.off = y;
+        n.raise = z;
+    }
+    c(HTMLCollection.prototype);
+    c(NodeList.prototype);
+    c(NamedNodeMap.prototype);
+    
+    // create an event type in a way compatible with IE9
     $.event=function(k,t){
-        var v=d.createEvent(k);
+        var v=$.createEvent(k);
         v['init'+k].apply(v,[].slice.call(arguments, 1));
         return v;
     };
-    e.on = e.addEventListener;
-    e.off = e.removeEventListener;
-    e.raise = e.dispatchEvent;
-
-    // DOM querying
-    e.any = e.querySelectorAll;
-    e.first = e.querySelector;
-    e.byId = d.getElementById.bind(d);
-    e.byTag = e.getElementsByTagName;
-    e.byClass = d.getElementsByClassName.bind(d);
-    e.byName = d.getElementsByName.bind(d);
+    // event registration shorthands
+    function v(b){
+        // event handling
+        b.on = b.addEventListener;
+        b.off = b.removeEventListener;
+        b.raise = b.dispatchEvent;
+    }
+    v(window);
+    // DOM querying operations
+    function a(b){
+        b.filter = b.querySelectorAll;
+        b.first = b.querySelector;
+        b.byTag = b.getElementsByTagName;
+        b.byClass = b.getElementsByClassName;
+        v(b);
+    }
+    a(e);
+    a($);
+    
+    // document root-specific queries
+    $.byName = $.getElementsByName;
+    $.byId = $.getElementById;
     
     // DOM manipulation
-    $.new = d.createElement.bind(d);
+    $.new = $.createElement;
     e.insertAfter = function(x, c){
         this.insertBefore(x, c.nextSibling);
     };
 
     // class manipulation
-    if ($['classList']) {
+    if (Element['classList']) {
         e.addClass = function(x) {
             this.classList.add(x);
             return this;
@@ -96,6 +111,6 @@
         };
     }
     e.toggleClass = function(c) {
-        return this.hasClass(c) ? this.removeClass(c) : this.addClass(c);
+        return (this.hasClass(c) ? this.removeClass : this.addClass)(c);
     };
 })(typeof exports === 'undefined' ? '$' : exports);

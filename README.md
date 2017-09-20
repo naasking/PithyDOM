@@ -1,7 +1,7 @@
-# PithyJS
+# PithyDOM
 
 A small, concise DOM library for modern browsers and IE9+ that currently
-stands at 706 bytes minified+gzipped.
+stands at 1,702 bytes minified and 721 bytes minified+gzipped.
 
 ## DOM Querying
 
@@ -9,7 +9,7 @@ Exposes more concise names for the standard query facilities so you can
 choose the most appropriate one. These extend Element.prototype so they
 are available everywhere.
 
-    $.any       // alias for querySelectorAll
+    $.filter    // alias for querySelectorAll
     $.first     // alias for querySelector
     $.byTag     // alias for getElementsByTagName
     $.byClass   // alias for getElementsByClassName
@@ -51,19 +51,20 @@ everywhere.
     $.off        // alias for removeEventListener
     $.raise      // alias for dispatchEvent
 
-You can use the new event APIs that support event constructors:
+You can use the new event APIs that support event constructors in modern
+browsers:
 
-    element.raise(new MouseEvent('click'));
+    $.byTag("button").raise(new MouseEvent('click'));
 
-Or to support IE9, use the DOM level 3 API with this convenience
-function:
+If you want to support IE9 as well, use the DOM level 3 API with this
+convenience function, and this should work in all browsers:
 
-    element.raise($.event('Event', 'click', true, true));
+    $.byTag("button").raise($.event('Event', 'click', true, true));
 
 The first argument is the kind of event, and defines which event init
 method is called, ie. 'MouseEvent' will call initMouseEvent, 'UIEvent'
 will call initUIEvent. This means you must provide all the non-optional
-parameters that initMouseEvent expects or you will get a runtime error.
+parameters that initMouseEvent expects or it will throw a runtime error.
 
 ## CSS Class Manipulation
 
@@ -79,7 +80,7 @@ add/remove/toggle support chaining, in that they return the element for
 further operations. Since add/remove only operate on a single class at a
 time, you can add multiple classes as:
 
-    element.addClass('foo').addClass('bar').toggleClass('active');
+    $.byId("node12").addClass('foo').addClass('bar').toggleClass('active');
 
 This was for conciseness and simplicity of implementation, since adding
 multiple classes isn't necessarily supported even by browsers that
@@ -100,11 +101,8 @@ so they should be fine.
 
 ## Status
 
-Let's say alpha quality for now, although the tests are pretty
+Let's say beta quality for now, although the tests are pretty
 comprehensive given how simple Pithy is.
-
-Not sure if extending prototypes is the best approach, but it's certainly
-concise and usable.
 
 ## License
 

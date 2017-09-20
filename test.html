@@ -12,10 +12,15 @@
         <div id="texty">
         Some other <a>text</a>.
         </div>
+        <button onclick="console.log('clicked!')">click me</button>
 <script type="text/javascript">
+var loaded = false;
+$.on('DOMContentLoaded', function(e){
+    loaded = true;
+});
 //=== TESTING FRAMEWORK ===
 function assert(label, cond) {
-    console.log((cond ? "OK::" : "ERROR::") + (label || arguments.callee.name));
+    console[cond ? "log" : "error"](label || arguments.callee.name);
     return cond;
 }
 function test(f) {
@@ -29,10 +34,13 @@ function has(obj, mems) {
 
 //=== TESTS ===
 function $members() {
-    return has($, ['first','any','byTag','byClass','byName', 'byId', 'on', 'off', 'raise', 'new', 'insertAfter', 'addClass', 'removeClass', 'hasClass']);
+    //console.log(Object.keys($));
+    return $ == document
+        && has($, ['first','filter','byTag','byClass','byName', 'byId', 'on', 'off', 'raise', 'new']);
 }
 function $elementMembers() {
-    return has(Element.prototype, ['first','any','byTag','byClass', 'byId', 'byName', 'on', 'off', 'raise', 'insertAfter', 'addClass', 'removeClass', 'hasClass']);
+    //console.log(Object.keys(Element.prototype));
+    return has(Element.prototype, ['first','filter','byTag', 'on', 'off', 'raise', 'insertAfter', 'addClass', 'removeClass', 'hasClass']);
 }
 function $collectionMembers(x){
     if (!x) throw new Error(this.name + ": invalid number of arguments");
@@ -58,12 +66,12 @@ function $removeClass(cl) {
 }
 function $collectionRaise(){
     var raised = 0;
-    $.any('body>*:not(script)')
+    $.filter('body>*:not(script)')
      .on('click', function(){
         ++raised;
     })
      .raise($.event('Event', 'click', true, true));
-    return raised == 2;
+    return raised == 3;
 }
 function $first(){
     return $.first('.foo').innerText.trim() == 'Some text.';
@@ -88,15 +96,19 @@ function $insertAfter(){
     return $.first('#texty ~ p').innerText.trim() === 'Paragraph';
 }
 function $mapQuery(){
-    var y = $.any('body>*').map(function(x){ return x.innerText;});
-    return y.length === 4
+    var y = $.filter('body>*').map(function(x){ return x.innerText;});
+    return y.length === 5
         && y[0].trim() === 'Some text.';
 }
 function $mapChildren(){
     var y = document.body.children.map(function(x){ return x.innerText;});
-    return y.length === 4
+    return y.length === 5
         && y[0].trim() === 'Some text.';
 }
+function $domLoadedEvent(){
+    return loaded === true;
+}
+
 test($members);
 test($elementMembers);
 test($collectionMembers, HTMLCollection.prototype);
@@ -113,6 +125,7 @@ test($byTag);
 test($insertAfter);
 test($mapQuery);
 test($mapChildren);
+setTimeout(function() { test($domLoadedEvent); }, 0);
 </script>
     </body>
 </html>
