@@ -93,6 +93,16 @@ Methods to manipulate the DOM:
     element.insertAfter     // complement to standard element.insertBefore
     $.new                   // alias for document.createElement
 
+## On DOM Loaded
+
+A common feature of DOM libraries is raising an event when all DOM content
+is loaded. In Pithy, $ is simply an alias for document, so and the DOM
+ready event is avaible eveywhere, so this is simply:
+
+    $.on('DOMContentLoaded', function(e){
+        ...
+    });
+
 ## Browser Support
 
 Works in IE9+ and other standard browsers. I don't have access to some
