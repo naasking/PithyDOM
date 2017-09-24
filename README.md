@@ -1,7 +1,7 @@
 # PithyDOM
 
 A small, concise DOM library for modern browsers and IE9+ that currently
-stands at 1,702 bytes minified and 721 bytes minified+gzipped.
+stands at 1,680 bytes minified and 709 bytes minified+gzipped.
 
 ## DOM Querying
 

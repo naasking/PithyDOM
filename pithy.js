@@ -8,7 +8,7 @@
  * Maybe add XHR: https://github.com/honza/140medley/blob/master/140medley.js
  * See also: https://github.com/dciccale/ki.js
  * */
-(function(_){
+!function(_){
     if (window[_]) throw new Error(_ + ' is already defined.');
     var e = Element.prototype;
     var $ = window[_] = document;
@@ -113,4 +113,4 @@
     e.toggleClass = function(c) {
         return (this.hasClass(c) ? this.removeClass : this.addClass)(c);
     };
-})(typeof exports === 'undefined' ? '$' : exports);
+}(window.exports || '$');
