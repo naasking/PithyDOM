@@ -1,7 +1,10 @@
 # PithyDOM
 
 A small, concise DOM library for modern browsers and IE9+ that currently
-stands at 1,680 bytes minified and 709 bytes minified+gzipped.
+stands at 1,758 bytes minified and 778 bytes minified+gzipped.
+
+The goal is to make typical DOM programming portable, pleasant, and
+performant.
 
 ## DOM Querying
 
@@ -75,6 +78,7 @@ and provides implementations for versions of IE that don't support classList.
     $.removeClass    // remove a single CSS class
     $.hasClass       // check whether an element has a class
     $.toggleClass    // removes class if present, else adds the class
+    $.replaceClass   // replaces a class with another
 
 add/remove/toggle support chaining, in that they return the element for
 further operations. Since add/remove only operate on a single class at a
@@ -91,7 +95,6 @@ support classList.
 Methods to manipulate the DOM:
 
     element.insertAfter     // complement to standard element.insertBefore
-    $.new                   // alias for document.createElement
 
 ## On DOM Loaded
 

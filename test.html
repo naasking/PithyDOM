@@ -36,7 +36,7 @@ function has(obj, mems) {
 function $members() {
     //console.log(Object.keys($));
     return $ == document
-        && has($, ['first','filter','byTag','byClass','byName', 'byId', 'on', 'off', 'raise', 'new']);
+        && has($, ['first','filter','byTag','byClass','byName', 'byId', 'on', 'off', 'raise']);
 }
 function $elementMembers() {
     //console.log(Object.keys(Element.prototype));
@@ -110,7 +110,7 @@ function $byTag(){
 }
 function $insertAfter(){
     var x = $.byId('texty');
-    var p = $.new('p');
+    var p = $.createElement('p');
     p.innerText = 'Paragraph';
     x.parentNode.insertAfter(p, x);
     return $.first('#texty ~ p').innerText.trim() === 'Paragraph';

@@ -10,11 +10,9 @@
  * */
 !function(_){
     if (this[_]) throw new Error(_ + ' is already defined.');
-    var e = Element.prototype;
-    var $ = this[_] = document;
-    
-    // standard collection operations
-    var m=['forEach','map','reduce','filter','reduceRight','every','slice','some'];
+    var e = Element.prototype,
+        $ = this[_] = document,
+        m=['forEach','map','reduce','filter','reduceRight','every','slice','some'];
     
     // add event listener to collection
     function x(e,f,c){
@@ -77,7 +75,6 @@
     $.byId = $.getElementById;
     
     // DOM manipulation
-    $.new = $.createElement;
     e.insertAfter = function(x, c){
         this.insertBefore(x, c.nextSibling);
     };
@@ -100,8 +97,7 @@
     };
     e.hasClass = function(c) {
         // an efficient non-allocating class search
-        var _ = this.className;
-        for (var i=_.indexOf(c); 0 <= i && i < _.length; i = _.indexOf(c, i+1))
+        for (var _=this.className, i=_.indexOf(c); 0 <= i && i < _.length; i = _.indexOf(c, i+1))
             if ((i == 0 || _[i-1] == ' ') && (i+c.length == _.length || _[i+c.length] == ' '))
                 return true;
         return false;
