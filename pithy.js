@@ -83,33 +83,30 @@
     };
 
     // class manipulation
-    if (Element['classList']) {
-        e.addClass = function(x) {
-            this.classList.add(x);
-            return this;
-        };
-        e.removeClass = function(x) {
-            this.classList.remove(x);
-            return this;
-        };
-        e.hasClass = function(c) {
-            return this.classList.contains(c);
-        };
-    } else {
-        e.addClass = function(x) {
-            this.className = this.className + ' ' + x;
-            return this;
-        };
-        e.removeClass = function(x) {
-            this.className = this.className.split(' ').filter(function(y){
-                return x != y;
-            }).join(' ');
-            return this;
-        };
-        e.hasClass = function(c) {
-            return 0<=this.className.split(' ').indexOf(c);
-        };
-    }
+    e.addClass = function() {
+        this.className += ' ' + [].join.call(arguments, ' ');
+        return this;
+    };
+    e.removeClass = function() {
+        for (var i=0, j=0, c=this.className.split(' '); i < arguments.length; ++i)
+            if ((j=c.indexOf(arguments[i])) >= 0)
+                c[j] = '', --i;
+        this.className = c.join(' ');
+        // var a=[].slice.call(arguments);
+        // this.className = this.className.split(' ').filter(function(y){
+        //     return a.indexOf(y) < 0;
+        // }).join(' ');
+        return this;
+    };
+    e.hasClass = function(c) {
+        // an efficient non-allocating class search
+        var _ = this.className;
+        for (var i=_.indexOf(c); 0 <= i && i < _.length; i = _.indexOf(c, i+1))
+            if ((i == 0 || _[i-1] == ' ') && (i+c.length == _.length || _[i+c.length] == ' '))
+                return true;
+        return false;
+        //return 0<=this.className.split(' ').indexOf(c);
+    };
     e.toggleClass = function(c) {
         return (this.hasClass(c) ? this.removeClass : this.addClass)(c);
     };

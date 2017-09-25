@@ -49,20 +49,30 @@ function $collectionMembers(x){
     //return has(x, ['forEach','map','reduce','filter','reduceRight','every','slice','some','find','on','off','raise']);
 }
 function $hasClass(cl){
+    //console.log("$hasClass: " + cl);
     return $.first('.' + cl).hasClass(cl);
 }
-function $addClass(cur, cl) {
+function $addClass(cur, c1, c2) {
     var x = $.first('.' + cur);
-    x.addClass(cl);
-    return 0 <= x.className.indexOf(cl)
-        && test($hasClass, cl)
-        && $.first('.' + cl) === x;
+    x.addClass(c1, c2);
+    //console.log("$addClass: " + cl + '=>' + x.className);
+    //console.log(c1 + ',' + c2);
+    return 0 <= x.className.indexOf(c1)
+        && test($hasClass, c1)
+        && $.first('.' + c1) === x
+        && 0 <= x.className.indexOf(c2)
+        && test($hasClass, c2)
+        && $.first('.' + c2) === x;
 }
-function $removeClass(cl) {
-    var x = $.first('.' + cl);
-    x.removeClass(cl);
-    return 0 > x.className.indexOf(cl)
-        && !$.first('.' + cl);
+function $removeClass(c1, c2) {
+    var x = $.first('.' + c1);
+    //console.log(x.className +".removeClass(" + cl + ')');
+    x.removeClass(c1, c2);
+    //console.log(x.className);
+    return 0 > x.className.indexOf(c1)
+        && !$.first('.' + c1)
+        && 0 > x.className.indexOf(c2)
+        && !$.first('.' + c2);
 }
 function $collectionRaise(){
     var raised = 0;
@@ -114,8 +124,8 @@ test($elementMembers);
 test($collectionMembers, HTMLCollection.prototype);
 test($collectionMembers, NodeList.prototype);
 test($hasClass, 'foo');
-test($addClass, 'foo', 'bar');
-test($removeClass, 'bar');
+test($addClass, 'foo', 'baz', 'bar');
+test($removeClass, 'bar', 'baz');
 test($collectionRaise);
 test($first);
 test($byId);
