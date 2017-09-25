@@ -9,9 +9,9 @@
  * See also: https://github.com/dciccale/ki.js
  * */
 !function(_){
-    if (window[_]) throw new Error(_ + ' is already defined.');
+    if (this[_]) throw new Error(_ + ' is already defined.');
     var e = Element.prototype;
-    var $ = window[_] = document;
+    var $ = this[_] = document;
     
     // standard collection operations
     var m=['forEach','map','reduce','filter','reduceRight','every','slice','some'];
@@ -60,7 +60,7 @@
         b.off = b.removeEventListener;
         b.raise = b.dispatchEvent;
     }
-    v(window);
+    v(this);
     // DOM querying operations
     function a(b){
         b.filter = b.querySelectorAll;
@@ -88,8 +88,8 @@
         return this;
     };
     e.removeClass = function() {
-        for (var i=0, j=0, c=this.className.split(' '); i < arguments.length; ++i)
-            if ((j=c.indexOf(arguments[i])) >= 0)
+        for (var i=0, j=0, a=arguments, c=this.className.split(' '); i < a.length; ++i)
+            if ((j=c.indexOf(a[i])) >= 0)
                 c[j] = '', --i;
         this.className = c.join(' ');
         // var a=[].slice.call(arguments);
@@ -117,4 +117,4 @@
         this.className=c.join(' ');
         return this;
     };
-}(window.exports || '$');
+}(this.exports || '$');
