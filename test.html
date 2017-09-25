@@ -74,6 +74,16 @@ function $removeClass(c1, c2) {
         && 0 > x.className.indexOf(c2)
         && !$.first('.' + c2);
 }
+function $replaceClass(c1, c2) {
+    var x = $.first('.' + c1);
+    //console.log(x.className +".removeClass(" + cl + ')');
+    x.replaceClass(c1, c2);
+    //console.log(x.className);
+    return 0 > x.className.indexOf(c1)
+        && !$.first('.' + c1)
+        && 0 <= x.className.indexOf(c2)
+        && $.first('.' + c2);
+}
 function $collectionRaise(){
     var raised = 0;
     $.filter('body>*:not(script)')
@@ -125,7 +135,8 @@ test($collectionMembers, HTMLCollection.prototype);
 test($collectionMembers, NodeList.prototype);
 test($hasClass, 'foo');
 test($addClass, 'foo', 'baz', 'bar');
-test($removeClass, 'bar', 'baz');
+test($replaceClass, 'baz', 'hello');
+test($removeClass, 'bar', 'hello');
 test($collectionRaise);
 test($first);
 test($byId);

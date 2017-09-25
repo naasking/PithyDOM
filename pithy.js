@@ -110,4 +110,11 @@
     e.toggleClass = function(c) {
         return (this.hasClass(c) ? this.removeClass : this.addClass)(c);
     };
+    e.replaceClass = function(o,n) {
+        for (var i=0, c=this.className.split(' '); i < c.length; ++i)
+            if (c[i]===o)
+                c[i] = n;
+        this.className=c.join(' ');
+        return this;
+    };
 }(window.exports || '$');
