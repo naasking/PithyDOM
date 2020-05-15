@@ -58,7 +58,8 @@
         b.off = b.removeEventListener;
         b.raise = b.dispatchEvent;
     }
-    v(this);
+    //v(this);
+    v(EventTarget.prototype);
     // DOM querying operations
     function a(b){
         b.filter = b.querySelectorAll;
