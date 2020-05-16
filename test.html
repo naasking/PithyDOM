@@ -3,7 +3,9 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title></title>
-        <script type="text/javascript" src="./pithydom.js"></script>
+        <script type="text/javascript" src="./pithy.dom.js"></script>
+        <script type="text/javascript" src="./pithy.ajax.js"></script>
+        <script type="text/javascript" src="./pithy.ui.js"></script>
     </head>
     <body>
         <a class="foo" name="somename">
@@ -17,6 +19,9 @@
 var loaded = false;
 $.on('DOMContentLoaded', function(e){
     loaded = true;
+    $.ajax("GET", "https://google.ca")
+     .timeout(100)
+     .as("xml");
 });
 //=== TESTING FRAMEWORK ===
 function assert(label, cond) {
@@ -128,6 +133,21 @@ function $mapChildren(){
 function $domLoadedEvent(){
     return loaded === true;
 }
+function $delay(){
+    var i = 0;
+    $.delay(function() {
+        assert("$delay.f", i === 1);
+        $.delay(function(){
+            assert("$delay.f.g", i === 0);
+        });
+        i = 0;
+    });
+    try {
+        return i === 0;
+    } finally {
+        ++i;
+    }
+}
 
 test($members);
 test($elementMembers);
@@ -146,6 +166,7 @@ test($byTag);
 test($insertAfter);
 test($mapQuery);
 test($mapChildren);
+test($delay);
 setTimeout(function() { test($domLoadedEvent); }, 0);
 </script>
     </body>
