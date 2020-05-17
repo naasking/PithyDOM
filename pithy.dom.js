@@ -96,8 +96,9 @@
         return function(a,b,c,d,e,g,h) {
             for (var i=0; i < this.length; ++i)
                 try {
-                    //f.call(this[i], a, b, c, d, e, g, h);
-                    this[i][f.name](a, b, c, d, e, g, h);
+                    f.call(this[i], a, b, c, d, e, g, h);
+                    //this[i][f.name](a, b, c, d, e, g, h);
+                    //this[i][f.name](a, b, c, d, e, g, h);
                 } catch(e) {
                     console.log(e);
                 }
