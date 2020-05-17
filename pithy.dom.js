@@ -16,7 +16,7 @@
         $ = w[_] = document,
         ap = Array.prototype,
         m=['forEach','map','reduce','filter','reduceRight','every','slice','some'],
-        s=['insertBefore','insertAfter','on','off','raise','attr','addClass','toggleClass','removeClass','appendChild','removeChild','replaceChild'];
+        s=['on','off','raise','sattr','gattr','addClass','toggleClass','removeClass']//,'appendChild','removeChild','replaceChild','insertBefore','insertAfter'];
     
     // DOM manipulation
     e.insertAfter = function(x, c){
@@ -43,15 +43,14 @@
         b.first = b.querySelector;
         b.byTag = b.getElementsByTagName;
         b.byClass = b.getElementsByClassName;
-        b.attr = function(k,v){
-            return v
-                ? this.setAttribute(k, v)
-                : this.getAttribute(k);
-        };
+        b.sattr = b.setAttribute;
+        b.gattr = b.getAttribute;
     }
     a(e);
     a($);
     a(DocumentFragment);
+
+    //FIXME: add functions to calculate element dimensions, position, etc.
     
     // document root-specific queries
     $.byName = $.getElementsByName;
@@ -94,10 +93,11 @@
     
     // apply f transitively to all collection elements
     function fwd(f){
-        return function() {
+        return function(a,b,c,d,e,g,h) {
             for (var i=0; i < this.length; ++i)
                 try {
-                    f.apply(this[i], arguments);
+                    //f.call(this[i], a, b, c, d, e, g, h);
+                    this[i][f.name](a, b, c, d, e, g, h);
                 } catch(e) {
                     console.log(e);
                 }

@@ -133,6 +133,14 @@ function $mapChildren(){
 function $domLoadedEvent(){
     return loaded === true;
 }
+function $attr(){
+    $.filter('body>*').forEach(function(x) {
+        assert("$attr.f", !x.gattr('dir'));
+        x.sattr('dir', 'ltr');
+    });
+    return $.filter('body>*').some(function(x) { return x.gattr('class'); })
+        && $.filter('body>*').every(function(x) { return x.gattr('dir') ==="ltr"; });
+}
 function $delay(){
     var i = 0;
     $.delay(function() {
@@ -167,6 +175,7 @@ test($insertAfter);
 test($mapQuery);
 test($mapChildren);
 test($delay);
+test($attr);
 setTimeout(function() { test($domLoadedEvent); }, 0);
 </script>
     </body>
