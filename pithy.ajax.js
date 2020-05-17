@@ -32,19 +32,19 @@
             t = [], v = [], d = [],
             c = null;
         r.open(m,u,a||true,l,p);
-        function dispose(){
-            for(var i=0; i < d.length; ++i)
-                try { d[i](r, e); } catch(e) {lg(e);}
+        function app(q, r, e){
+            for(var i=0; i < q.length; ++i)
+                try { q[i](r, e); } catch(e) {lg(e);}
         }
         r.on('load', function(e){
             if (c)
                 r.responseType = c;
-            for(var i=0; i < t.length; ++i)
-                try { t[i](r, e); } catch(e) {lg(e);}
+            app(t, r, e);
+            app(d, r, e);
         });
         function err(e){
-            for(var i=0;i < v.length; ++i)
-                try { v[i](r, e); } catch(e) {lg(e);}
+            app(v, r, e);
+            app(d, r, e);
         }
         r.on('error', err);
         r.on('abort', err);
