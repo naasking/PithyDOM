@@ -60,7 +60,7 @@ browsers:
     $.byTag("button").raise(new MouseEvent('click'));
 
 If you want to support IE9 as well, use the DOM level 3 API with this
-convenience function, and this should work in all browsers:
+convenience function, and this should also work in all browsers:
 
     $.byTag("button").raise($.event('Event', 'click', true, true));
 
@@ -99,8 +99,8 @@ Methods to manipulate the DOM:
 ## On DOM Loaded
 
 A common feature of DOM libraries is raising an event when all DOM content
-is loaded. In Pithy, $ is simply an alias for document, so and the DOM
-ready event is avaible eveywhere, so this is simply:
+is loaded. In Pithy, $ is simply an alias for `document`. The DOM
+ready event is available everywhere, so this is simply:
 
     $.on('DOMContentLoaded', function(e){
         ...
