@@ -56,7 +56,6 @@
     // document root-specific queries
     $.byName = $.getElementsByName;
     $.byId = $.getElementById;
-    $.tag = $.createElement;
 
     // class manipulation
     e.addClass = function() {
@@ -122,8 +121,7 @@
         }
     };
     $.delay = function(f){
-        var i = nx++;
-        q[i] = f;
-        c.port2.postMessage(i);
+        q[nx] = f;
+        c.port2.postMessage(nx++);
     };
 }(this.exports || '$');
