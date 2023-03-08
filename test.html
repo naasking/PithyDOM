@@ -5,7 +5,6 @@
         <title></title>
         <script type="text/javascript" src="./pithy.dom.js"></script>
         <script type="text/javascript" src="./pithy.ajax.js"></script>
-        <script type="text/javascript" src="./pithy.ui.js"></script>
     </head>
     <body>
         <a class="foo" name="somename">
@@ -19,9 +18,9 @@
 var loaded = false;
 $.on('DOMContentLoaded', function(e){
     loaded = true;
-    $.ajax("GET", "https://google.ca")
-     .timeout(100)
-     .as("xml");
+    //$.ajax("GET", "https://google.ca")
+    // .timeout(100)
+    // .as("xml");
 });
 //=== TESTING FRAMEWORK ===
 function assert(label, cond) {
@@ -176,7 +175,7 @@ test($mapQuery);
 test($mapChildren);
 test($delay);
 test($attr);
-setTimeout(function() { test($domLoadedEvent); }, 0);
+setTimeout(function() { test($domLoadedEvent); }, 1);
 </script>
     </body>
 </html>
