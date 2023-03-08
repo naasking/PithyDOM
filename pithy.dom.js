@@ -16,7 +16,8 @@
         $ = w[_] = document,
         ap = Array.prototype,
         m=['forEach','map','reduce','filter','reduceRight','every','slice','some'],
-        s=['on','off','raise','sattr','gattr','addClass','toggleClass','removeClass']//,'appendChild','removeChild','replaceChild','insertBefore','insertAfter'];
+        s=['on','off','raise','sattr','addClass','toggleClass','removeClass'];
+        //u=['appendChild','removeChild']; //replaceChild, insertBefore, insertAfter
     
     // DOM manipulation
     e.insertAfter = function(x, c){
@@ -55,11 +56,7 @@
     // document root-specific queries
     $.byName = $.getElementsByName;
     $.byId = $.getElementById;
-    $.tag = function(t,f) {
-        var x = $.createElement(t);
-        if (f) f(x);
-        return x;
-    };
+    $.tag = $.createElement;
 
     // class manipulation
     e.addClass = function() {
@@ -93,12 +90,10 @@
     
     // apply f transitively to all collection elements
     function fwd(f){
-        return function(a,b,c,d,e,g,h) {
+        return function(a,b,c) {
             for (var i=0; i < this.length; ++i)
                 try {
-                    f.call(this[i], a, b, c, d, e, g, h);
-                    //this[i][f.name](a, b, c, d, e, g, h);
-                    //this[i][f.name](a, b, c, d, e, g, h);
+                    f.call(this[i], a, b, c);
                 } catch(e) {
                     console.log(e);
                 }
@@ -108,7 +103,7 @@
     // load the standard operations into the given collection prototype
     function c(n){
         for (var i=0;i<m.length;++i)
-            n[m[i]]=n[m[i]]||Array.prototype[m[i]];
+            n[m[i]]=n[m[i]]||ap[m[i]];
         // register element methods that should apply across collections
         for (var i = 0; i < s.length; ++i)
             n[s[i]] = fwd(e[s[i]]);
